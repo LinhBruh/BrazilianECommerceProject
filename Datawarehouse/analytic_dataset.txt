@@ -1,0 +1,54 @@
+In the dataset we have download and store in the project folder, we need have ananlysis this. In there we have 7 table is 
+- customers
+- orders
+- order_items
+- order_payments
+- products
+- sellers
+- reviews
+We need identify 3 importance point : Relationship between tables (ERD), indentity the bussiness process and the datawarehouse design (Star Schema)
+
+The ralationship between the tables is : 
+            customers
+                |
+                | customer_id
+                v
+            orders
+                |
+                | order_id
+                v
+          order_items
+              / \
+  product_id /   \ seller_id
+       products  sellers
+
+            orders
+            |
+            +------ order_payments
+
+            orders
+            |
+            +------ order_reviews
+
+## Next, we need identify the bussiness process
+ - Any order have customer, product, seller, payment and rate 
+ - The gain of Fact table, option 1 we have a choice is 1 record = 1 order -> it not suitable for this case 
+                            option 2 we have 1 record = 1 order item -> very really ok in this case
+
+
+ ## Last we will indentity the attributes of the datawarehouse tables 
+ - In the fact table fact_order_items : order_key, product_key, customer_key, seller_key, date_key, price, freight_value, payment_value, review_score
+ - dim_customer : customer_key, custome_id, city, state
+ - dim_product : product_key, produc_id, category
+ - dim_seller : seller_key, seller_id, city
+ - dim_date : date_key, fulldate, day, month, quarter, year, month_name, day_name, week, day_of_week, is_weekend
+
+                 dim_customer
+                      |
+                      |
+                      |
+dim_product --- fact_order_items --- dim_seller
+                      |
+                      |
+                      |
+                  dim_date
