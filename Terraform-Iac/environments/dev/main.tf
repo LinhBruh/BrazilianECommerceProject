@@ -19,3 +19,34 @@ module "data_lake" {
     Owner       = var.owner
   }
 }
+
+module "glue_catalog" {
+  source                = "../../modules/glue_catalog"
+  database_name         = "be_olist_dev_raw"
+  data_lake_bucket_name = module.data_lake.bucket_name
+
+  description = "Raw zone metadata for brazillian ecommerce dataset"
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = var.owner
+    DataZone    = "raw"
+  }
+}
+
+module "athena" {
+  source                = "../../modules/athena"
+  work_group_name       = "be-olist-dev"
+  data_lake_bucket_name = module.data_lake.bucket_name
+
+  bytes_scanned_cutoff_per_querry = 104857600
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = var.owner
+    Component   = "query"
+  }
+}
