@@ -36,3 +36,8 @@ output "glue_raw_table_names" {
   description = "Ten cac bang trong glue database"
   value       = module.glue_catalog.raw_table_names
 }
+
+output "glue_process_customers_job_name" {
+  description = "Tên Glue Job xử lý customers"
+  value       = module.glue_processing.job_name
+}

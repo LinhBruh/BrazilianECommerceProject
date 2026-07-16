@@ -50,3 +50,20 @@ module "athena" {
     Component   = "query"
   }
 }
+
+module "glue_processing" {
+  source = "../../modules/glue_processing"
+
+  project_name          = var.project_name
+  environment           = var.environment
+  data_lake_bucket_arn  = module.data_lake.bucket_arn
+  data_lake_bucket_name = module.data_lake.bucket_name
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = var.owner
+    DataZone    = "processed"
+  }
+}
