@@ -67,3 +67,18 @@ module "glue_processing" {
     DataZone    = "processed"
   }
 }
+
+module "processed_catalog" {
+  source = "../../modules/processed_catalog"
+
+  database_name = "be_olist_dev_processed"
+  data_lake_bucket_name = module.data_lake.bucket_name
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = var.owner
+    DataZone    = "processed"
+  }
+}

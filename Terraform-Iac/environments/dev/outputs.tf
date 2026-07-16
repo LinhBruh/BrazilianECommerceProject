@@ -41,3 +41,12 @@ output "glue_process_customers_job_name" {
   description = "Tên Glue Job xử lý customers"
   value       = module.glue_processing.job_name
 }
+output "glue_processed_database_name" {
+  description = "Tên Glue processed database"
+  value       = module.processed_catalog.database_name
+}
+
+output "glue_processed_customers_table" {
+  description = "Tên processed customers table"
+  value       = module.processed_catalog.customers_table_name
+}
